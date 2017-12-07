@@ -6,6 +6,7 @@ var cleanCSS = require('gulp-clean-css');
 var rename = require("gulp-rename");
 var uglify = require('gulp-uglify');
 var pkg = require('./package.json');
+var babel = require('gulp-babel');
 
 // Compiles SCSS files from /scss into /css
 gulp.task('sass', function() {
@@ -35,6 +36,7 @@ gulp.task('minify-css', ['sass'], function() {
 // Minify custom JS
 gulp.task('minify-js', function() {
   return gulp.src('js/agency.js')
+    .pipe(babel())
     .pipe(uglify())
     .pipe(rename({
       suffix: '.min'
