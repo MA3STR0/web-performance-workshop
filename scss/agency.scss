@@ -14,3 +14,10 @@
 @import "footer.scss";
 // Bootstrap Overrides
 @import "bootstrap-overrides.scss";
+
+.show {
+  transition: opacity 400ms;
+}
+.hide {
+  opacity: 0;
+}
