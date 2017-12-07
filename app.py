@@ -3,16 +3,23 @@
 import os
 import tornado.ioloop
 import yaml
+from time import sleep
 from tornado.web import Application, RequestHandler, StaticFileHandler
 from tornado.options import options, define
 
 define('unix_socket', default="/tmp/nginx.socket", help='Path to unix socket to bind')
 DEBUG = 'DYNO' not in os.environ
 
+def query_cats():
+    with open('database.yml') as yfile:
+        cats = yaml.load(yfile)
+    for cat in cats:
+        sleep(0.05)
+        yield cat
+
 class MainHandler(RequestHandler):
     def get(self):
-        with open('database.yml') as yfile:
-            cats = yaml.load(yfile)
+        cats = list(query_cats())
         self.render("templates/index.html", cats=cats)
 
 if __name__ == "__main__":
