@@ -54,12 +54,6 @@ if __name__ == "__main__":
             (r"/js/(.*)", StaticFileHandler, {'path': 'js'}),
             (r"/vendor/(.*)", StaticFileHandler, {'path': 'vendor'}),
         ], debug=DEBUG)
-    if not DEBUG:
-        server = HTTPServer(app)
-        socket = bind_unix_socket(options.unix_socket)
-        server.add_socket(socket)
-        open('/tmp/app-initialized', 'w').close()
-    else:
-        port = os.environ.get("PORT", '8000')
-        app.listen(port)
+    port = os.environ.get("PORT", '8000')
+    app.listen(port)
     tornado.ioloop.IOLoop.current().start()
