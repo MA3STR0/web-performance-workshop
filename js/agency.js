@@ -39,7 +39,7 @@
 
 // fetch() returns a promise
 var decoder = new TextDecoder();
-fetch("http://127.0.0.1:8000/catstream").then(response => {
+fetch("/catstream").then(response => {
   // response.body is a readable stream.
   // Calling getReader() gives access to the stream's content
   var reader = response.body.getReader();
