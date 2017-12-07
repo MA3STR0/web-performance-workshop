@@ -58,7 +58,7 @@ fetch("http://127.0.0.1:8000/catstream").then(response => {
         return
       }
       var obj = JSON.parse(text);
-        // set element attributes
+      // set element attributes
       var element = document.querySelector('.cat-gallery .portfolio-item.hide');
       var next_element = element.cloneNode(true);
       // add placeholder for a next cat
