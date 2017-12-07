@@ -1,1 +1,1 @@
-web: bin/start-nginx python app.py
+web: python app.py
