@@ -4,12 +4,12 @@ import os
 import tornado.ioloop
 import yaml
 import json
-from time import sleep
 from tornado.web import Application, RequestHandler, StaticFileHandler
 from tornado.options import options, define
 from tornado.netutil import bind_unix_socket
 from tornado.httpserver import HTTPServer
-from tornado.gen import coroutine
+from tornado.gen import coroutine, sleep
+from tornado.concurrent import Future
 
 define('unix_socket', default="/tmp/nginx.socket", help='Path to unix socket to bind')
 DEBUG = 'DYNO' not in os.environ
@@ -19,7 +19,7 @@ def query_cats():
     with open('database.yml') as yfile:
         cats = yaml.load(yfile)
     for cat in cats:
-        sleep(0.05)
+        yield sleep(0.5)
         yield cat
 
 
@@ -28,6 +28,9 @@ class CatStreamHandler(RequestHandler):
     def get(self):
         self.set_header("Access-Control-Allow-Origin", "*")
         for row in query_cats():
+            if type(row) == Future:
+                yield row
+                continue
             self.write(json.dumps(row)+'\n')
             self.flush()
         self.finish()
