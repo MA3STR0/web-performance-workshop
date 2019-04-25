@@ -33,4 +33,5 @@ if __name__ == "__main__":
         ], debug=DEBUG)
     port = os.environ.get("PORT", '8000')
     app.listen(port)
+    print("The app is running on http://127.0.0.1:8000")
     tornado.ioloop.IOLoop.current().start()
