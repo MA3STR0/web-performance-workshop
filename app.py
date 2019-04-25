@@ -19,7 +19,7 @@ def query_cats():
     with open('database.yml') as yfile:
         cats = yaml.load(yfile)
     for cat in cats:
-        yield sleep(0.5)
+        yield sleep(0.1)
         yield cat
 
 
